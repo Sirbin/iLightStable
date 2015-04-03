@@ -1,0 +1,93 @@
+﻿Version=2.5
+IconFile=
+NumberOfModules=1
+Module1=Wait
+ModuleVisible1=1
+Package=derez.aliens
+DoNotOverwriteManifest=False
+ManifestCode=
+UserTypesHint=sp_par,Wait
+NumberOfFiles=3
+File1=clock1.gif
+File2=Clock2.gif
+File3=Wait.bal
+NumberOfLibraries=2
+Library1=core
+Library2=gifdecoder
+@EndOfDesignText@
+#Region Module Attributes
+	#FullScreen: False
+	#IncludeTitle: True
+	#ApplicationLabel: Wait
+	#VersionCode: 1
+	#VersionName: 1.1
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: True
+#End Region
+
+'Activity module
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+
+End Sub
+
+Sub Globals
+Dim W As Wait
+Dim Label1, lblnew, lblold As Label
+Dim Existing, New As Button
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+Activity.LoadLayout("wait.bal")
+
+Dim Vw As View
+Dim Fr As Double = 100%x/480
+For i = 0 To Activity.NumberOfViews - 1
+	Vw = Activity.GetView(i)
+	Vw.left = Vw.left * Fr
+	Vw.width = Vw.Width * Fr
+	Vw.Top = Vw.Top * Fr * 1.1
+	Vw.Height = Vw.Height * Fr * 1.1
+	If Vw Is Button Then 
+		Dim B As Button = Vw
+		B.TextSize = B.TextSize * Sqrt( Fr)
+	End If
+	If Vw Is Label Then 
+		Dim L As Label = Vw
+		L.TextSize = L.TextSize * Sqrt(Fr)
+	End If
+Next
+
+W.Initialize(Activity, Colors.ARGB(70,90,90,90), Colors.Yellow, 24 * Sqrt(Fr), "clock1.gif" )
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+W.Hide
+End Sub
+
+Sub New_click
+Dim t As Long = DateTime.Now
+W.show("Wait (new class)...",100)
+For i = 0 To 50000
+	Label1.Text = i
+	W.DoEvent(i)
+Next
+W.Hide
+lblnew.Text = NumberFormat((DateTime.Now - t)/DateTime.TicksPerSecond,0,0)
+End Sub
+
+Sub Existing_Click
+Dim t As Long = DateTime.Now
+ProgressDialogShow("Wait...")
+For i = 0 To 50000
+	Label1.Text = i
+	If i Mod(100) = 0 Then DoEvents
+Next
+ProgressDialogHide
+lblold.Text = NumberFormat( (DateTime.Now - t)/DateTime.TicksPerSecond,0,0)
+End Sub

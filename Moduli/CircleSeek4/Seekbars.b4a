@@ -1,0 +1,83 @@
+﻿Version=3.82
+IconFile=
+NumberOfModules=4
+Module1=VSeekbar
+Module2=Size
+Module3=CircleSeek
+Module4=HSeekbar
+Build1=Default,derez.libs
+DoNotOverwriteManifest=False
+ManifestCode=
+NumberOfFiles=1
+File1=bar.bal
+NumberOfLibraries=2
+Library1=core
+Library2=reflection
+@EndOfDesignText@
+#Region Module Attributes
+	#FullScreen: False
+	#IncludeTitle: True
+	#ApplicationLabel: SeekBars
+	#VersionCode: 7
+	#VersionName: 7.2
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+
+'Activity module
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+End Sub
+
+Sub Globals
+	Dim vbar As VSeekbar
+	Dim Hbar As HSeekbar
+	Dim cs, cs2 As CircleSeek
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+Activity.LoadLayout("bar.bal")
+Hbar.setColors(Colors.Black, Colors.white, Colors.rgb(255,180,180), Colors.white)
+'vbar.setColors(Colors.Black, Colors.yellow, Colors.rgb(150,150,255), Colors.white)
+'Size.SetSize(Activity,480,320)
+
+              '   Code creation
+cs2.Initialize(Me,"cs2")
+cs2.CodeCreateView(31%x,31%x,100, cs2.SHORT_KNOB)
+Activity.AddView(cs2.AsView,20%x,60%y,40%x,40%x)
+				' set the colors and text size
+cs.setColors(Colors.RGB(150,150,255), Colors.blue, Colors.RGB(180,180,255), Colors.Yellow, 24*Size.cf)
+cs2.setColors(Colors.RGB(150,150,255), Colors.blue, Colors.RGB(180,180,255), Colors.Yellow, 24*Size.cf)
+' cs2 will have the default colors
+End Sub
+
+Sub Activity_Resume
+Hbar.Value = 50
+vbar.Value = 75
+cs.Value = 0
+cs2.Value = 75
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub Hbar_ValueChanged(Value As Int, UserChanged As Boolean)
+Log("H " & Value& "  " & UserChanged)
+End Sub
+
+Sub Vbar_ValueChanged(Value As Int, UserChanged As Boolean)
+'Log("V " & Value& "  " & UserChanged)
+
+End Sub
+
+Sub cs_ValueChanged(Value As Int, UserChanged As Boolean)
+'Log("cs " & Value& "  " & UserChanged)
+End Sub
+
+Sub cs2_ValueChanged(Value As Int, UserChanged As Boolean)
+
+'Log("cs2 " & Value& "  " & UserChanged)
+End Sub

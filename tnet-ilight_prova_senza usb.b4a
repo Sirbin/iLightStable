@@ -1,0 +1,97 @@
+﻿Version=3.82
+IconFile=
+NumberOfModules=3
+Module1=sensors_table
+Module2=Table
+Module3=AsyncStreamsText
+Build1=Default,b4a.example
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+NumberOfFiles=5
+File1=configuration.bal
+File2=ilight.bal
+File3=Sensori.bal
+File4=sensori_1.bal
+File5=sensors.bal
+NumberOfLibraries=9
+Library1=core
+Library2=phone
+Library3=stringutils
+Library4=json
+Library5=usb
+Library6=randomaccessfile
+Library7=sql
+Library8=reflection
+Library9=serial
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: B4A Example
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+
+	Private Configuration As Button
+	Private Home As Button
+	Private Network As Button
+	Private Policies As Button
+	Private sensors As Button
+	Dim json As JSONParser
+	Private back As Button
+	Dim map1 As Map
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
+	Activity.LoadLayout("iLight")
+	Msgbox("Welcome to Basic4android!", "")
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+
+
+Sub sensors_Click
+	StartActivity("sensors_table")	
+End Sub
+Sub Policies_Click
+	
+End Sub
+Sub Network_Click
+	
+End Sub
+Sub Home_Click
+	
+End Sub
+Sub Configuration_Click
+	
+End Sub
+Sub back_Click
+	StartActivity("main")
+End Sub
+Sub ScrollView1_ScrollChanged(Position As Int)
+	
+End Sub

@@ -1,0 +1,199 @@
+﻿Version=2.52
+IconFile=
+NumberOfModules=0
+Package=anywheresoftware.b4a.agraham.dialogsdemo
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+UserTypesHint=
+NumberOfFiles=2
+File1=android48.png
+File2=Layout.bal
+NumberOfLibraries=3
+Library1=core
+Library2=dialogs
+Library3=reflection
+@EndOfDesignText@
+#Region Module Attributes
+	#FullScreen: False
+	#IncludeTitle: True
+	#ApplicationLabel: Dialogs Demo
+	#VersionCode: 1
+	#VersionName: 
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: True
+#End Region
+
+'Activity module
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+End Sub
+
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+
+	Dim btnDate As Button
+	Dim btnInput As Button
+	Dim getTime As Button
+	Dim Bmp As Bitmap
+	Dim btnColor As Button
+	Dim btnColor2 As Button
+	Dim btnNumber As Button
+	Dim btnFile As Button
+	Dim btnCustom As Button
+	
+	Dim lbl1 As Label
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("Layout")
+	Bmp.Initialize(File.DirAssets, "android48.png")
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub btnInput_Click
+	Dim Id As InputDialog
+	'Id.PasswordMode = True
+	'Id.InputType = Id.INPUT_TYPE_DECIMAL_NUMBERS
+	'Id.InputType = Id.INPUT_TYPE_NUMBERS
+	'Id.InputType = Id.INPUT_TYPE_PHONE
+	Id.Input = ""
+	Id.Hint = "Enter some text!"
+	Id.HintColor = Colors.ARGB(196, 255, 140, 0)
+	ret = DialogResponse.CANCEL
+	ret = Id.Show("Input the required text", "B4A Input Dialog", "Yes", "No", "Maybe", Bmp)
+	ToastMessageShow(ret & " : " & Id.Input, False)	
+End Sub
+
+Sub btnDate_Click
+	Dim Dd As DateDialog
+	'Dd.ShowCalendar = False
+	Dd.Year = DateTime.GetYear(DateTime.Now)
+	Dd.Month = DateTime.GetMonth(DateTime.Now)	
+	Dd.DayOfMonth = DateTime.GetDayOfMonth(DateTime.Now)
+	ret = Dd.Show("Set the required date", "B4A Date Dialog", "Yes", "No", "Maybe", Bmp)
+	ToastMessageShow(ret & " : " & Dd.DayOfMonth & "/" & Dd.Month & "/" & Dd.Year , False)
+End Sub
+
+Sub btnTime_Click
+	Dim td As TimeDialog
+	Dim txt As String
+	td.Hour = DateTime.GetHour(DateTime.Now)
+	td.Minute = DateTime.GetMinute(DateTime.Now)
+	td.Is24Hours = True
+	ret = td.Show("Set the required time", "B4A Time Dialog", "Yes", "No", "Maybe", Bmp)
+	ToastMessageShow(ret & " : " & td.Hour & ":" & td.Minute, False)
+End Sub
+
+Sub btnColor_Click
+	Dim cd As ColorDialog
+	Dim color As Int
+	cd.RGB = Colors.RGB(128, 128, 128)
+	ret = cd.Show("B4A Color Dialog", "Yes", "No", "Maybe", Bmp)	
+	ToastMessageShow(ret & " : " & cd.Red & " " & cd.Green & " " & cd.Blue, False)
+	Activity.color = cd.RGB
+
+End Sub
+
+Sub btnColor2_Click
+	Dim cd As ColorPickerDialog
+	Dim color As Int
+	cd.RGB = Colors.DarkGray
+	ret = cd.Show("B4A ColorPicker Dialog", "Yes", "No", "Maybe", Bmp)	
+	ToastMessageShow(ret & " : " & cd.RGB, False)
+	Activity.color = cd.RGB
+End Sub
+
+Sub btnColor3_Click
+	Dim cd As ColorDialogHSV
+	Dim color As Int
+	cd.Hue = 180
+	cd.Saturation = 0.5
+	cd.Value = 0.5
+	ret = cd.Show("B4A ColorPicker Dialog HSV", "Yes", "No", "Maybe", Bmp)	
+	ToastMessageShow(ret & " : " & cd.RGB, False)
+	Activity.color = cd.RGB
+End Sub
+
+Sub btnNumber_Click
+	Dim nd As NumberDialog
+	nd.Digits = 10
+	nd.Number = -12345
+	nd.Decimal = 2
+	nd.ShowSign = True
+	ret = nd.Show("B4A Number Dialog", "Yes", "No", "Maybe", Bmp)	
+	ToastMessageShow(ret & " : " & nd.Number, False)	
+End Sub
+
+Sub btnFile_Click
+	Dim fd As FileDialog
+	fd.FastScroll = True
+	'fd.ShowOnlyFolders = True
+	fd.FilePath = File.DirRootExternal ' also sets ChosenName to an emtpy string
+	'fd.ShowOnlyFolders = true
+	'fd.FileFilter = ".txt" ' for example or ".jpg,.png" for multiple file types
+	ret = fd.Show("B4A File Dialog", "Yes", "No", "Maybe", Bmp)	
+	ToastMessageShow(ret & " : Path : " & fd.FilePath & CRLF & "File : " & fd.ChosenName, False)	
+End Sub
+
+Sub btnCustom_Click
+	Dim cd As CustomDialog
+	Dim pnl As Panel
+	pnl.Initialize("pnl")
+	Dim bgnd As ColorDrawable
+	bgnd.Initialize(Colors.Green, 5dip)
+	pnl.Background = bgnd
+	Dim btn1 As Button
+	btn1.Initialize("btn1")
+	btn1.Text = "Press me"
+	pnl.AddView(btn1, 80dip, 50dip, 60dip, 60dip)
+	lbl1.Initialize("")
+	pnl.AddView(lbl1, 50dip, 120dip, 120dip, 60dip)
+	cd.AddView(pnl, 5%x, 0%y, 77%x, 70%y) ' sizing relative to the screen size is probably best
+	ret = cd.Show("B4A Custom Dialog", "Yes", "No", "Maybe", Bmp)		
+End Sub
+
+Sub btnCustom2_Click
+	Dim cd As CustomDialog2
+	Dim pnl As Panel
+	pnl.Initialize("pnl")
+	Dim bgnd As ColorDrawable
+	bgnd.Initialize(Colors.Cyan, 5dip)
+	pnl.Background = bgnd
+	Dim btn1 As Button
+	btn1.Initialize("btn1")
+	btn1.Text = "Press me"
+	pnl.AddView(btn1, 80dip, 50dip, 60dip, 60dip)
+	lbl1.Initialize("")
+	pnl.AddView(lbl1, 50dip, 120dip, 120dip, 60dip)
+	
+	Dim lv As ListView
+	lv.Initialize("lv")
+	lv.AddTwoLinesAndBitmap("one", "one", Null)
+	lv.AddTwoLinesAndBitmap("two", "one", Null)
+	lv.AddTwoLinesAndBitmap("three", "one", Null)
+	pnl.AddView(lv, 300dip, 120dip, 120dip, 250dip)
+	
+	cd.AddView(pnl, 77%x, 60%y) ' sizing relative to the screen size is probably best
+	ret = cd.Show("B4A Custom Dialog", "Yes", "No", "Maybe", Bmp)		
+End Sub
+
+Sub btn1_Click
+	lbl1.Text = "Pressed!"
+	lbl1.Color = Colors.Black
+	ToastMessageShow("Pressed!", False)		
+End Sub
+
+Sub lv_ItemClick (Position As Int, Value As Object)
+	ToastMessageShow(Position, True)
+End Sub	
+
+

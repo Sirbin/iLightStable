@@ -1,0 +1,78 @@
+﻿Version=4
+IconFile=
+NumberOfModules=2
+Module1=Shadow
+Module2=CircleScale
+Build1=Default,derez.circlescale
+DoNotOverwriteManifest=False
+ManifestCode=
+NumberOfFiles=2
+File1=CS.bal
+File2=hand.png
+NumberOfLibraries=3
+Library1=core
+Library2=reflection
+Library3=javaobject
+@EndOfDesignText@
+#Region Module Attributes
+	#FullScreen: False
+	#IncludeTitle: True
+	#ApplicationLabel: CircleScale
+	#VersionCode: 1
+	#VersionName: 1
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+
+'Activity module
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+End Sub
+
+Sub Globals
+	Dim  cs2 As CircleScale
+	Private Cs1 As CircleScale
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+Activity.LoadLayout("CS")
+
+				' designer creation
+Cs1.setColors(Colors.red, Colors.black, Colors.black, Colors.red, Colors.black, 24)
+Cs1.SetShadow(Colors.Gray, 45, 6dip)
+Cs1.Value = 75
+
+              '   Code creation
+cs2.Initialize(Me,"cs2")
+cs2.CodeCreateView(70%x, 70%x, 40, 160, 10)
+Activity.AddView(cs2.AsView, 15%x, 8%y, 70%x, 70%x)
+
+'Dim dr As GradientDrawable
+'dr.Initialize("TOP_BOTTOM",Array As Int(Colors.lightgray,Colors.black)) 
+'dr.CornerRadius = 70%x/2  ' a circle
+'cs2.AsView.Background = dr
+
+'cs2.setColors(Colors.green, Colors.white, Colors.yellow, Colors.green, Colors.White, 24)
+
+cs2.Value = 75
+
+
+End Sub
+
+Sub Activity_Resume
+
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+
+Sub cs1_ValueChanged(Value As Int, UserChanged As Boolean)
+Log("cs1 " & Value& "  " & UserChanged)
+End Sub
+
+Sub cs2_ValueChanged(Value As Int, UserChanged As Boolean)
+Log("cs2 " & Value& "  " & UserChanged)
+End Sub

@@ -1,0 +1,118 @@
+﻿Version=4.3
+IconFile=
+NumberOfModules=10
+Module1=SensorTable
+Module2=Table
+Module3=config
+Module4=Size
+Module5=cancellato
+Module6=HSeekbar
+Module7=ConfigPageMod
+Module8=ConfigurationWizardMod
+Module9=PoliciesMode
+Module10=CircleSeek
+Build1=Default,b4a.example
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+NumberOfFiles=6
+File1=configpage.bal
+File2=configuration.bal
+File3=configurationwizard.bal
+File4=ilight.bal
+File5=Policies.bal
+File6=Sensori.bal
+NumberOfLibraries=13
+Library1=core
+Library2=phone
+Library3=stringutils
+Library4=json
+Library5=usb
+Library6=randomaccessfile
+Library7=reflection
+Library8=serial
+Library9=sql
+Library10=scrollview2d
+Library11=stringfunctions
+Library12=usbserial
+Library13=wheelview
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: TNE iLIGHT PROGRAM
+	#VersionCode: 1
+	#VersionName: 
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: landscape
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	Public json As JSONParser
+	Public btConnected As Boolean
+	Public admin As BluetoothAdmin
+	Public serial1 As Serial
+	Public astreams1  As AsyncStreams
+			
+End Sub
+
+Sub Globals
+	Private configuration As Button
+	Private Home As Button
+	Private Network As Button
+	Private Policies As Button
+	Private sensors As Button
+	Private back As Button
+	Dim cas As Button
+
+	Dim map1 As Map
+End Sub
+
+Sub Activity_Create(FirstTime As Boolean)
+	Activity.LoadLayout("iLight")
+	If FirstTime Then	
+		admin.Initialize("BT")
+		serial1.Initialize("Serial1")
+	End If 	
+End Sub
+
+Sub Activity_Resume
+	
+End Sub
+
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+Sub sensors_Click 	
+	If admin.IsEnabled = True Then 
+		admin.Disable
+		
+	End If	
+	StartActivity("SensorTable")
+End Sub
+Sub Policies_Click
+	If admin.IsEnabled = True Then
+		admin.Disable
+	End If 
+	StartActivity("PoliciesMode")
+End Sub
+Sub Network_Click
+	
+End Sub
+Sub Home_Click
+	Msgbox("ByeBye","Exit")
+	ExitApplication
+End Sub
+Sub Configuration_Click
+	If admin.IsEnabled = True Then
+		admin.Disable
+	End If	
+	StartActivity("ConfigurationWizardMod")
+End Sub
+Sub back_Click
+	 	
+	StartActivity("main")
+End Sub
